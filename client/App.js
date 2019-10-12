@@ -13,24 +13,29 @@ class App extends Component {
             price: '',
             description: '',
             shopName: '',
-            shopIconURL: ''
+            shopIconURL: '',
+            custom_shops_state: ''
         }
     }
 
     componentDidMount() {
         axios.get(`http://localhost:3002/api/listing/${this.state.listing_id}`)
             .then(({ data }) => {
-                console.log(data)
-                this.setState({
-                    title: data[0].title,
-                    price: data[0].price,
-                    description: data[0].description,
-                    shopName: data[0].Shop.shop_name,
-                    shopIconURL: data[0].Shop.icon_url_fullxfull
-                })
+                console.log(data);
+
+                if (data.type !== 'Error') {
+                    this.setState({
+                        title: data.title,
+                        price: data.price,
+                        description: data.description,
+                        shopName: data.Shop.shop_name,
+                        shopIconURL: data.Shop.icon_url_fullxfull,
+                        custom_shops_state: data.Shop.custom_shops_state
+                    })
+                }
             })
             // UPDATE with approperiate error handling
-            .catch(err => console.log)
+            .catch(err => console.log(err))
     }
 
     render() {
@@ -41,6 +46,7 @@ class App extends Component {
                 <p>{this.state.description}</p>
                 <p>{this.state.shopName}</p>
                 <p>{this.state.shopIconURL}</p>
+                <p>{this.state.custom_shops_state}</p>
             </div>
         );
     }
