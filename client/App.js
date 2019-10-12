@@ -29,6 +29,7 @@ class App extends Component {
                     shopIconURL: data[0].Shop.icon_url_fullxfull
                 })
             })
+            // UPDATE with approperiate error handling
             .catch(err => console.log)
     }
 
