@@ -8,7 +8,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '/../dist')));
 
 app.listen(PORT, () => {
-    console.log(`Shits up and running on PORT:${PORT}`);
+    console.log(`Proxy is up and running on PORT:${PORT}`);
 });
 
 module.exports.PORT;
