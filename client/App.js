@@ -6,24 +6,40 @@ const axios = require('axios');
 class App extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            test: ''
+            listing_id: 173033626,
+            title: '',
+            price: '',
+            description: '',
+            shopName: '',
+            shopIconURL: ''
         }
     }
 
     componentDidMount() {
-        axios.get('http://localhost:3002/test').then(({ data }) => {
-            this.setState({ test: data });
-        }).catch(() => {
-            console.log(`Error with GET request at 'localhost:3002/test'`);
-        })
+        axios.get(`http://localhost:3002/api/listing/${this.state.listing_id}`)
+            .then(({ data }) => {
+                console.log(data)
+                this.setState({
+                    title: data[0].title,
+                    price: data[0].price,
+                    description: data[0].description,
+                    shopName: data[0].Shop.shop_name,
+                    shopIconURL: data[0].Shop.icon_url_fullxfull
+                })
+            })
+            .catch(err => console.log)
     }
 
     render() {
         return (
             <div>
-                <h1>Hello Keenan! This is the client from the proxy!</h1>
-                <h2>{this.state.test}</h2>
+                <h1>{this.state.title}</h1>
+                <h2>{this.state.price}</h2>
+                <p>{this.state.description}</p>
+                <p>{this.state.shopName}</p>
+                <p>{this.state.shopIconURL}</p>
             </div>
         );
     }
